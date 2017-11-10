@@ -1,19 +1,27 @@
 %?mingw_package_header
 
 Name:           mingw-armadillo
-Version:        7.700.0
+Version:        8.200.2
 Release:        1%{?dist}
 Summary:        MinGW port of Armadillo C++ linear algebra library
 
-License:        MPLv2.0
-URL:            http://arma.sourceforge.net/
+License:        ASL 2.0
+URL:            http://arma.sourceforge.net
 Source0:        http://sourceforge.net/projects/arma/files/armadillo-%{version}.tar.xz
 
-BuildRequires:  mingw32-filesystem
-BuildRequires:  mingw64-filesystem
-BuildRequires:  mingw32-gcc-c++
-BuildRequires:  mingw64-gcc-c++
 BuildRequires:  cmake
+
+BuildRequires:  mingw32-filesystem
+BuildRequires:  mingw32-gcc-c++
+BuildRequires:  mingw32-openblas
+BuildRequires:  mingw32-arpack
+BuildRequires:  mingw32-SuperLU
+
+BuildRequires:  mingw64-filesystem
+BuildRequires:  mingw64-gcc-c++
+BuildRequires:  mingw64-openblas
+BuildRequires:  mingw64-arpack
+BuildRequires:  mingw64-SuperLU
 
 BuildArch:      noarch
 
@@ -40,7 +48,7 @@ Summary:        64-bit version of Armadillo C++ linear algebra library for Windo
 %setup -qn armadillo-%{version}
 
 %build
-%mingw_cmake
+%mingw_cmake -DDETECT_HDF5=OFF
 %mingw_make %{?_smp_mflags}
 
 %install
@@ -65,5 +73,9 @@ Summary:        64-bit version of Armadillo C++ linear algebra library for Windo
 %{mingw64_datadir}/Armadillo/
 
 %changelog
+* Fri Nov 10 2017 Jajauma's Packages <jajauma@yandex.ru> - 8.200.2-1
+- Update to latest upstream release
+- Require mingw-openblas, mingw-arpack, mingw-SuperLU for building
+
 * Tue Feb 07 2017 Jajauma's Packages <jajauma@yandex.ru> - 7.700.0-1
 - Initial release
